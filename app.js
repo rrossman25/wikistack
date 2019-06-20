@@ -4,12 +4,17 @@ const app = express();
 const html = require('html-template-tag');
 const { addPage, editPage, main, userList, userPages, wikiPage, layout } = require('./views/index')
 const { db, Page, User } = require('./models/index');
+const wikiRouter = require('./routes/wiki');
+const userRouter = require('./routes/user');
 
-app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 app.use(express.static(__dirname + '/public'));
+app.use(express.urlencoded({ extended: false }));
+app.use('/wiki', wikiRouter);
+app.use('/users', userRouter);
+
 app.get('/', (req, res) => {
-   res.send(layout('hello world'));
+   res.redirect('/wiki');
 })
 
 const PORT = 1337;
