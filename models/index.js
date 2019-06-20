@@ -23,6 +23,13 @@ const Page = db.define('page', {
     }
   })
 
+  Page.beforeValidate(function(page){
+    let regexAlpha = /\W/g;
+    let spaceRegex = /\s+/g;
+    page.slug = page.title.replace(spaceRegex, '_').replace(regexAlpha, '');
+    return Sequelize.Promise.resolve(page);
+  })
+
   const User = db.define('user', {
     name: {
       type: Sequelize.STRING,
