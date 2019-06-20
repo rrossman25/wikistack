@@ -10,6 +10,8 @@ const userRouter = require('./routes/user');
 app.use(morgan('dev'));
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
 app.use('/wiki', wikiRouter);
 app.use('/users', userRouter);
 
