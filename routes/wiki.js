@@ -3,9 +3,13 @@ const router = express.Router();
 const addPage = require('../views/addPage');
 const { Page } = require('../models');
 const wikipage = require('../views/wikipage');
+const main = require('../views/main');
 
-router.get('/', (req, res, next) => {
-  res.send('getting wiki with it');
+router.get('/', async (req, res, next) => {
+  try {
+    const pages = await Page.findAll();
+    res.send(main(pages));
+  } catch (error) { next(error) }
 });
 
 router.post('/', async (req, res, next) => {
